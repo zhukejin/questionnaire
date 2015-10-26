@@ -90,7 +90,7 @@
 	
 </style>
 
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="avalon.js"></script>
 <title>响水移动用户问卷调查</title>
 </head>
@@ -301,14 +301,19 @@ var vm = avalon.define({
         if (!/\d{11}/.test(postData.phone)) {
             alert('手机号格式错误');
         } else {
-            $.ajax({
-              method: "POST",
-              url: "save.php",
-              data: postData,
-              dataType: 'json',
-            }).done(function( data ) {
-              alert(data['msg']);
-            });
+            console.log($)
+            // jQuery.ajax({
+            //   method: "POST",
+            //   url: "save.php",
+            //   data: postData,
+            //   dataType: 'json',
+            // }).done(function( data ) {
+            //   alert(data['msg']);
+            // });
+            
+            jQuery.post('save.php',postData,function(data){
+                alert(data['msg']);
+            },'JSON')
         }
         
 
@@ -355,10 +360,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '我都很满意';
                 if (typeof event != 'undefined') {
-                    console.log(typeof event)
-                    if ($.inArray(t, vm.questionInfo.q2_1_a.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_1_a.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_1_a.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_1_a.result = [t];
                     }
                 }
@@ -374,15 +379,16 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '没有遇到过任何问题', t1 = '没有使用过自助设备';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_1_b.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_1_b.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_1_b.result.remove(t);
 
-                    } else if ($.inArray(t1, vm.questionInfo.q2_1_b.result) > -1 && event.toElement.defaultValue != t1) {
+                    } else if ($.inArray(t1, vm.questionInfo.q2_1_b.result) > -1 && tmp != t1) {
                         vm.questionInfo.q2_1_b.result.remove(t1);
 
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_1_b.result = [t];
-                    } else if (event.toElement.defaultValue == t1) {
+                    } else if (tmp == t1) {
                         vm.questionInfo.q2_1_b.result = [t1];
                     }
                 }
@@ -401,9 +407,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '表现很好，没有问题';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_2_a.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_2_a.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_2_a.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_2_a.result = [t];
                     }
                 }
@@ -421,9 +428,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '表现很好，没有问题';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_2_b.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_2_b.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_2_b.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_2_b.result = [t];
                     }
                 }
@@ -441,9 +449,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '表现很好，没有问题';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_2_c.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_2_c.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_2_c.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_2_c.result = [t];
                     }
                 }
@@ -461,9 +470,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '没有遇到过以上情况';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_3_a.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_3_a.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_3_a.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_3_a.result = [t];
                     }
                 }
@@ -481,9 +491,10 @@ function getAllConfig(action) {
             change: function (event) {
                 var t = '没有以上任何服务';
                 if (typeof event != 'undefined') {
-                    if ($.inArray(t, vm.questionInfo.q2_3_b.result) > -1 && event.toElement.defaultValue != t) {
+                    var tmp = event.target ? event.target.defaultValue : event.toElement.defaultValue;
+                    if ($.inArray(t, vm.questionInfo.q2_3_b.result) > -1 && tmp != t) {
                         vm.questionInfo.q2_3_b.result.remove(t);
-                    } else if (event.toElement.defaultValue == t){
+                    } else if (tmp == t){
                         vm.questionInfo.q2_3_b.result = [t];
                     }
                 }
