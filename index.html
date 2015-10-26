@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+
+<style type="text/css">
+	@charset "utf-8"; body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,li,input {margin: 0; } input {padding: 0; font-size:18px; } ul,ol {list-style: none; margin: 0; padding: 0; } img {border: 0; vertical-align: bottom; -ms-interpolation-mode: bicubic; } html {font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } body{font-family: "Arial","Sans-serif",'Microsoft Yahei'; font-size: 14px; background: #f4f4f4; } a{text-decoration: none; } .header{height: 52px; line-height: 52px; background: #3b5999; } .header-box{_zoom:1; position: relative; } .header-box:after,.header-box:before, .header-box:after, .logo{float:left; _display:inline; text-decoration: none; font-size:22px; color:#fff; margin-left:10px; } .logo img{vertical-align: middle; margin-right:5px; }  .container{padding:0 10px; } .module{padding:20px 0; width:300px; margin:0 auto; } .hr{height:1px; overflow: hidden; background: #e5e5e5; } .module h3{color:#3b5999; font-size:18px; line-height: 34px; } .form-text{ine-height: 20px; height: 20px; _height: auto; overflow: hidden; padding:10px; border:none; width:216px; _width:212px; } 
+    .form-btn{
+        border:2px solid #fff; 
+        background: #3b5999; 
+        color:#fff; 
+        width:64px; 
+        vertical-align: middle;
+        line-height:36px;
+        font-size:14px;
+        cursor: pointer;
+        float: right;
+        -webkit-appearance: none;
+    }
+
+
+
+    .footer{
+        border-top:1px solid #dcdcdc; background: #e8e8e8; line-height: 24px; font-size:14px; text-align: center; padding:20px 0; color:#666;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+     }
+
+
+    /* 问卷区css */
+
+    .questionBox {
+        margin: 0 auto;
+        /*border: 1px solid red;*/
+        height: 100px;
+        width: 95%;
+        padding: 20px;
+        /*text-align: center;*/
+    }
+
+    .quest-text {
+        color:#3b5999; font-size:18px; line-height: 34px; 
+        font-weight: bold;
+    }
+
+    .questionInfo {
+        color: gray;
+        font-size:18px; line-height: 34px; 
+    }
+
+    .answerInfo {
+        color: gray; font-size: 14px;
+        line-height: 2;
+    }
+
+    .answerInfo label {
+        display: block;
+    }
+
+    .controller {
+        position: fixed;
+        bottom: 75px;
+        width: 100%;
+    }
+
+    .controller .btnleft {
+        float: left;
+    }
+
+    .controller .btnright {
+        float: right;
+    }
+
+    .q5 {
+        text-align: center;
+    }
+
+    .q4 {
+        margin: 0 auto;
+        width: 100%;
+        border: 0px;
+        height: 150px;
+    }
+
+    .source {
+        float: left;
+    }
+	
+</style>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="avalon.js"></script>
+<title>响水移动用户问卷调查</title>
+</head>
+<body ms-controller="ctrl">
+<div class="wraper">
+    <div class="header">
+        <div class="header-box">
+            <a href="#" class="logo"><img src="http://xzyd.xzydhsh.cn/admin/mbkh/css/logo.png" width="40" height="40">响水移动用户问卷调查</a>
+        </div>
+    </div>
+
+    <div class="container">
+     	<!-- 问卷区 -->
+        <div class="questionBox">
+            <div ms-if="show==='q1'">
+                <span class="quest-text">Q1: </span>
+                <span class="questionInfo">{{questionInfo.q1.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q1.answer" class="source">
+                        <input type="radio" name="q1" ms-duplex-string="questionInfo.q1.result" ms-click="questionInfo.q1.change" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2'">
+                <span class="quest-text">Q2: </span>
+                <span class="questionInfo">{{questionInfo.q2.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2.answer">
+                        <input type="radio" name="q2" ms-click="questionInfo.q2.change" ms-duplex-string="questionInfo.q2.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_1_a'">
+                <span class="quest-text">Q2-1-a: </span>
+                <span class="questionInfo">{{questionInfo.q2_1_a.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_1_a.answer">
+                        <input type="checkbox" name="q2_1_a" ms-click="questionInfo.q2_1_a.change" ms-duplex-string="questionInfo.q2_1_a.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_1_b'">
+                <span class="quest-text">Q2-1-b: </span>
+                <span class="questionInfo">{{questionInfo.q2_1_b.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_1_b.answer">
+                        <input type="checkbox" name="q2_1_b" ms-click="questionInfo.q2_1_b.change" ms-duplex-string="questionInfo.q2_1_b.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_2_a'">
+                <span class="quest-text">Q2-2-a: </span>
+                <span class="questionInfo">{{questionInfo.q2_2_a.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_2_a.answer">
+                        <input type="checkbox" name="q2_2_a" ms-click="questionInfo.q2_2_a.change" ms-duplex-string="questionInfo.q2_2_a.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_2_b'">
+                <span class="quest-text">Q2-2-b: </span>
+                <span class="questionInfo">{{questionInfo.q2_2_b.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_2_b.answer">
+                        <input type="checkbox" name="q2_2_b" ms-click="questionInfo.q2_2_b.change" ms-duplex-string="questionInfo.q2_2_b.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_2_c'">
+                <span class="quest-text">Q2-2-c: </span>
+                <span class="questionInfo">{{questionInfo.q2_2_c.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_2_c.answer">
+                        <input type="checkbox" name="q2_2_c" ms-click="questionInfo.q2_2_c.change" ms-duplex-string="questionInfo.q2_2_c.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_3_a'">
+                <span class="quest-text">Q2-3-a: </span>
+                <span class="questionInfo">{{questionInfo.q2_3_a.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_3_a.answer">
+                        <input type="checkbox" name="q2_3_a" ms-click="questionInfo.q2_3_a.change" ms-duplex-string="questionInfo.q2_3_a.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q2_3_b'">
+                <span class="quest-text">Q2-3-b: </span>
+                <span class="questionInfo">{{questionInfo.q2_3_b.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q2_3_b.answer">
+                        <input type="checkbox" name="q2_3_b" ms-click="questionInfo.q2_3_b.change" ms-duplex-string="questionInfo.q2_3_b.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q3'">
+                <span class="quest-text">Q3: </span>
+                <span class="questionInfo">{{questionInfo.q3.question}}</span>
+                <div class="answerInfo">
+                    <label ms-repeat="questionInfo.q3.answer" class="source">
+                        <input type="radio" name="q3" ms-click="questionInfo.q3.change"  ms-duplex-string="questionInfo.q3.result" ms-attr-value="el">&nbsp;&nbsp;{{el}}  &nbsp;&nbsp;&nbsp;&nbsp;  
+                    </label>
+                </div>
+            </div>
+
+            <div ms-if="show==='q4'">
+                <span class="quest-text">Q4: </span>
+                <span class="questionInfo">{{questionInfo.q4.question}}</span>
+                <div class="answerInfo">
+                    <textarea class="q4" ms-duplex-string="questionInfo.q4.result">
+                        
+                    </textarea>                        
+                </div>
+            </div>
+
+            <div ms-if="show==='q5'" class="q5">
+                <h3 ms-text="questionInfo.q5.question" ></h3>
+            </div>
+        </div>
+
+        <div class="module" ms-if="allAnswer">
+            <h3>手机号码:</h3>
+
+            <input type="text" size="30" maxlength="11" class="form-text" ms-duplex-string="phone" placeholder="请输入11位响水移动号码" />
+            <input type="submit" value="提交" class="form-btn" ms-click="go" />
+        </div>    
+    </div>
+
+</div>
+<div class="controller">
+    <input type="button" ms-if="show != 'q1'" value="上一题" class="form-btn btnleft" ms-click="prev()"/>
+    <input type="button"  ms-if="show != 'q5'" value="下一题" class="form-btn btnright" ms-click="next()"/>
+</div>
+<div class="footer">           
+       响水移动公司&COPY;版权所有
+    </div>
+<script type="text/javascript">
+//计算宽度
+if ($(window).width() > 980) {
+    $('.container, .controller').width(980).css('margin', '0 auto');
+    $('.controller').css({'left': '0', 'right': '0'});
+}
+
+//扩展 Javascript 数组对象
+Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+    }
+    return -1;
+};
+
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
+
+avalon.config({debug: false});
+
+//mvvm 逻辑区
+var vm = avalon.define({
+    $id: 'ctrl',
+    nextQuestion: 'q3',
+    prevQuestion: ['q1'],
+    show : 'q1',
+    allAnswer: false,
+    indexf: 0,
+    questionInfo: getAllConfig(),
+    next: function () {
+        vm.questionInfo[vm.show].change();
+        vm.show = vm.nextQuestion;
+        vm.indexf ++;
+    },
+    prev: function () {
+        vm.show = vm.prevQuestion[vm.indexf];
+        vm.questionInfo[vm.show].change();
+        vm.indexf --;
+        vm.allAnswer = false;
+    },
+    phone: '',
+    go: function () {
+        var postData = {
+            phone: vm.phone,
+            q1: vm.questionInfo.q1.result,
+            q2: vm.questionInfo.q2.result,
+            q2_1_a : vm.questionInfo.q2_1_a.result,
+            q2_1_b : vm.questionInfo.q2_1_b.result,
+            q2_2_a : vm.questionInfo.q2_2_a.result,
+            q2_2_b : vm.questionInfo.q2_2_b.result,
+            q2_2_c : vm.questionInfo.q2_2_c.result,
+            q2_3_a : vm.questionInfo.q2_3_a.result,
+            q2_3_b : vm.questionInfo.q2_3_b.result,
+            q3: vm.questionInfo.q3.result,
+            q4: vm.questionInfo.q4.result,
+        }
+
+
+        if (!/\d{11}/.test(postData.phone)) {
+            alert('手机号格式错误');
+        } else {
+            $.ajax({
+              method: "POST",
+              url: "save.php",
+              data: postData,
+              dataType: 'json',
+            }).done(function( data ) {
+              alert(data['msg']);
+            });
+        }
+        
+
+    }
+});
+
+/**
+ * [getAllConfig description]
+ * @param  {[type]} action [description]
+ * @return {[type]}        [description]
+ */
+function getAllConfig(action) {
+    var config = {
+        q1: {
+            question: '请问您如何评价中国移动营业厅的整体服务质量？请用1到10分来评价，10分非常好，1分非常差.',
+            answer: [1,2,3,4,5,6,7,8,9,10],
+            result: '10',
+            change: function () {
+                vm.nextQuestion = vm.questionInfo.q1.result > 8 ? 'q3' : 'q2';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+        q2: {
+            question: '请问您觉得中国移动的营业厅服务工作在哪些方面还需要进一步提升?',
+            answer: ['环境和设施', '人员服务', '排队等候'],
+            result: '环境和设施',
+            change: function () {
+                if (vm.questionInfo.q2.result == '环境和设施')
+                    vm.nextQuestion = 'q2_1_a';
+                else if (vm.questionInfo.q2.result == '人员服务')
+                    vm.nextQuestion = 'q2_2_a';
+                else if (vm.questionInfo.q2.result == '排队等候')
+                    vm.nextQuestion = 'q2_3_a';
+
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_1_a: {
+            question: '请问您觉得移动营业厅的环境可以有哪些提升?',
+            answer: ['厅内温度、光线', '厅内卫生', '厅内秩序', '我都很满意'],
+            result: ['我都很满意'],
+
+            change: function (event) {
+                var t = '我都很满意';
+                if (typeof event != 'undefined') {
+                    console.log(typeof event)
+                    if ($.inArray(t, vm.questionInfo.q2_1_a.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_1_a.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_1_a.result = [t];
+                    }
+                }
+                vm.nextQuestion = 'q2_1_b';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_1_b: {
+            question: '请问您在使用自助设备及设施时遇到过以下哪些问题?',
+            answer: ['设备故障，无法使用', '遇到问题时，无人帮助解决', '自助设备过少，等候时间长', '没有使用过自助设备','没有遇到过任何问题'],
+            result: ['没有遇到过任何问题'],
+            change: function (event) {
+                var t = '没有遇到过任何问题', t1 = '没有使用过自助设备';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_1_b.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_1_b.result.remove(t);
+
+                    } else if ($.inArray(t1, vm.questionInfo.q2_1_b.result) > -1 && event.toElement.defaultValue != t1) {
+                        vm.questionInfo.q2_1_b.result.remove(t1);
+
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_1_b.result = [t];
+                    } else if (event.toElement.defaultValue == t1) {
+                        vm.questionInfo.q2_1_b.result = [t1];
+                    }
+                }
+                
+
+                vm.nextQuestion = 'q3';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_2_a: {
+            question: '请问您觉得移动营业员在服务规范方面的表现怎么样?',
+            answer: ['未统一着装或穿戴不整齐', '解答问题不耐烦、推诿客户', '服务不热情主动', '存在不尊重客户或违规的语言和行为', '表现很好，没有问题'],
+            result: ['表现很好，没有问题'],
+
+            change: function (event) {
+                var t = '表现很好，没有问题';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_2_a.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_2_a.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_2_a.result = [t];
+                    }
+                }
+
+                vm.nextQuestion = 'q2_2_b';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_2_b: {
+            question: '请问您觉得移动营业员在业务推荐方面的表现怎样?',
+            answer: ['明确表示不需要，仍强烈推荐', '没有根据我的消费需求，推荐我适合的套餐/促销活动', '未向我介绍和推荐网上营业厅或掌上营业厅', '表现很好，没有问题'],
+            result: ['表现很好，没有问题'],
+
+            change: function (event) {
+                var t = '表现很好，没有问题';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_2_b.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_2_b.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_2_b.result = [t];
+                    }
+                }
+
+                vm.nextQuestion = 'q2_2_c';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_2_c: {
+            question: '请问您觉得移动营业员在业务办理方面的表现怎么样?',
+            answer: ['业务不熟练，速度慢，需要他人协助', '不理解客户需求，答非所问', '营业员关键信息告知不全，未清晰完整的告知所有条款', '营业员私自或强制客户开业务','表现很好，没有问题'],
+            result: ['表现很好，没有问题'],
+
+            change: function (event) {
+                var t = '表现很好，没有问题';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_2_c.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_2_c.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_2_c.result = [t];
+                    }
+                }
+
+                vm.nextQuestion = 'q3';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_3_a: {
+            question: '请问您在等候过程中，遇到过以下哪些情况?',
+            answer: ['秩序混乱，且无人管理', '很多人排队时，仍有未开放的台席', '营业员办理速度慢，等候时间延长', '没有遇到过以上情况'],
+            result: ['没有遇到过以上情况'],
+
+            change: function (event) {
+                var t = '没有遇到过以上情况';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_3_a.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_3_a.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_3_a.result = [t];
+                    }
+                }
+
+                vm.nextQuestion = 'q2_3_b';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q2_3_b: {
+            question: '排队等候过程中，您觉得工作人员在主动服务方面的表现怎么样?',
+            answer: ['工作人员主动询问我需要办理什么业务，并使用手持设备帮我处理', '工作人员主动引导我使用自助设备', '工作人员主动递送给我宣传单页或介绍业务/促销活动等', '没有以上任何服务'],
+            result: ['工作人员主动询问我需要办理什么业务，并使用手持设备帮我处理'],
+
+            change: function (event) {
+                var t = '没有以上任何服务';
+                if (typeof event != 'undefined') {
+                    if ($.inArray(t, vm.questionInfo.q2_3_b.result) > -1 && event.toElement.defaultValue != t) {
+                        vm.questionInfo.q2_3_b.result.remove(t);
+                    } else if (event.toElement.defaultValue == t){
+                        vm.questionInfo.q2_3_b.result = [t];
+                    }
+                }
+
+                vm.nextQuestion = 'q3';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+
+        q3: {
+            question: '请问您在多大程度上愿意向您的亲朋好友推荐中国移动？请用1到10表达您的观点，1代表非常不愿意，10代表非常愿意.',
+            answer: [1,2,3,4,5,6,7,8,9,10],
+            result: '10',
+            change: function () {
+                vm.nextQuestion = 'q4';
+                vm.prevQuestion.push(vm.show);
+            }
+        },
+
+        q4: {
+            question: '请问您推荐或不推荐中国移动的原因是？',
+            result: '嗯， 没有问题',
+            change: function () {
+                vm.nextQuestion = 'q5';
+                vm.prevQuestion.push(vm.show);
+                vm.allAnswer = true;
+            }
+        },
+
+        q5: {
+            question: '问卷已完成，谢谢您的配合!',
+        }
+    }
+
+    return config;
+}
+
+</script>
+</body>
+</html>
