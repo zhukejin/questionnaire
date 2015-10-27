@@ -229,7 +229,7 @@
             <h3>手机号码:</h3>
 
             <input type="text" size="30" maxlength="11" class="form-text" ms-duplex-string="phone" placeholder="请输入11位响水移动号码" />
-            <input type="submit" value="提交" class="form-btn" ms-click="go" />
+            <input type="submit" ms-disabled="isSubmit" value="提交" class="form-btn btn-default" ms-click="go" />
         </div>    
     </div>
 
@@ -273,6 +273,7 @@ var vm = avalon.define({
     show : 'q1',
     allAnswer: false,
     indexf: 0,
+    isSubmit: false,
     questionInfo: getAllConfig(),
     next: function () {
         vm.questionInfo[vm.show].change(undefined, true);
@@ -305,9 +306,6 @@ var vm = avalon.define({
             q4: vm.questionInfo.q4.result,
         }
 
-        console.log(postData);
-
-
         if (!/\d{11}/.test(postData.phone)) {
             alert('手机号格式错误');
         } else {
@@ -318,7 +316,10 @@ var vm = avalon.define({
               data: $.param(postData),
               dataType: 'json',
             }).done(function( data ) {
-              alert(data['msg']);
+                if (data.flag == true)
+                    vm.isSubmit = true;
+
+               alert(data['msg']);
             });
         }
         
