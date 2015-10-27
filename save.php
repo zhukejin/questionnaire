@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+header('Content-type: application/json');
 //定义数据库配置
 $dbConfig = array(
 	"host" => 'localhost',
@@ -10,9 +11,8 @@ $dbConfig = array(
 );
 
 //接收数据
-$data = $_POST;
+$data = $_GET;
 $dataArray = array();
-
 //创建过滤器
 foreach (@$data as $k => $v) {
 	if (is_string($v)) {
