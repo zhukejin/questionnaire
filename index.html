@@ -229,7 +229,7 @@
             <h3>手机号码:</h3>
 
             <input type="text" size="30" maxlength="11" class="form-text" ms-duplex-string="phone" placeholder="请输入11位响水移动号码" />
-            <input type="submit" ms-disabled="isSubmit" value="提交" class="form-btn btn-default" ms-click="go" />
+            <input type="submit" value="提交" class="form-btn btn-default" ms-click="go" />
         </div>    
     </div>
 
@@ -309,21 +309,21 @@ var vm = avalon.define({
         if (!/\d{11}/.test(postData.phone)) {
             alert('手机号格式错误');
         } else {
-            // console.log($("span"))
-            jQuery.ajax({
-              method: "POST",
-              url: "save.php",
-              data: $.param(postData),
-              dataType: 'json',
-            }).done(function( data ) {
-                if (data.flag == true)
-                    vm.isSubmit = true;
-
-               alert(data['msg']);
-            });
-        }
-        
-
+            if (vm.isSubmit === false) {
+                jQuery.ajax({
+                  method: "POST",
+                  url: "save.php",
+                  data: $.param(postData),
+                  dataType: 'json',
+                }).done(function( data ) {
+                    if (data.flag == true)
+                        vm.isSubmit = true;
+                    alert(data['msg']);
+                });    
+            } else {
+                alert('请勿重复提交');
+            }            
+        } 
     }
 });
 
